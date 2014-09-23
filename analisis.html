@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Radar Chart</title>
+		<script src="Chart.min.js"></script>
+		<script src="dades.js"></script>
+		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
+		<style>
+			canvas{
+			}
+		</style>
+	</head>
+	<body>
+		<div style="width:50%;">
+			<canvas id="canvas" height="450" width="450"  legend=true></canvas>
+		</div>
+		<div id="legend" style="width:45%;float:left">
+		</div>
+
+
+	<script>
+	var graph_colors = [ "220,220,220", "151,187,205", "255,153,0", "50,153,187" ]
+	var labels =  ["0", "22.5", "45", "67.5", "90", "112.5", "135", "157.5","180", "202.5","225", "247.5","270", "292.5", "315" ,"337.5"]
+
+
+
+
+	window.onload = function(){
+		var d = { labels: labels }
+		d['datasets'] = [];
+		counter = 0;
+		datasets.forEach(function(e){
+			c = graph_colors[counter % graph_colors.length];
+			d.datasets[counter] = { 
+								label: e.label , 
+								data: e.data, 
+								fillColor: "rgba("+c+",0.2)", 				
+								strokeColor: "rgba("+c+",1)",
+								pointColor: "rgba("+c+",1)",
+								pointStrokeColor: "#fff",
+								pointHighlightFill: "#fff",
+								pointHighlightStroke: "rgba("+c+",1)"
+							};
+			counter++;
+		});
+		window.myRadar = new Chart(document.getElementById("canvas").getContext("2d")).Radar(d, {
+			responsive: true
+		});
+		//document.getElementById('legend').innerHTML = myRadar.generateLegend()
+
+	}
+	</script>
+	</body>
+</html>
