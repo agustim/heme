@@ -1,0 +1,29 @@
+#!/bin/sh
+
+Scan
+# iwinfo wlan0 scan|awk -vRS="" -vOFS=',' '$1=$1'
+
+#!/usr/bin/lua
+function run(command)
+	local handle = io.popen(command)
+	local result = handle:read("*a")
+	handle:close()
+	return result
+end
+
+positions = { "0", "45", "90", "135", "180", "225", "270", "315" }
+
+for i, position in ipairs(positions) do
+	print "Analitzar " .. position .. " Graus."
+	scan = 
+
+Associar
+# ??
+
+
+Analitzar links
+#iwinfo wlan0 assoclist
+
+
+Enendre leds
+
