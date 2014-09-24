@@ -66,7 +66,8 @@ function radarChart(activeLabel) {
     var ctx = document.getElementById("chart").getContext("2d");
     new Chart(ctx).Radar(d, {
             responsive: true,
-            animation: false
+            animation: false,
+            scaleShowLabels: true
         });
     legend(document.getElementById("legend"), d, activeLabel);   
 }
