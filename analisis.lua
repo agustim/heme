@@ -6,6 +6,7 @@ led3 = "/sys/class/leds/wpj342:red:sig1"
 led4 = "/sys/class/leds/wpj342:yellow:sig2"
 LED_OFF = 0
 LED_ON = 255
+file = "/www/heme/dades.js"
 
 function run(command)
 	local handle = io.popen(command)
@@ -82,9 +83,9 @@ data = {}
 new_data = {}
 positions = { "0", "22.5", "45", "67.5", "90", "112.5", "135", "157.5","180", "202.5","225", "247.5","270", "292.5", "315" ,"337.5" }
 --positions = { "0", "22.5" }
-num_test_by_position = 2
+num_test_by_position = 5
+wlandevice = "wlan0"
 
-print("/*");
 for i, position in ipairs(positions) do
 	print ("Analitzar " .. position .. " Graus.")
 	print ("Wait few seconds.")
@@ -96,7 +97,7 @@ for i, position in ipairs(positions) do
 	print ("Start...")
 	data[i] = {}
 	for n = 1, num_test_by_position do
-		comando = "iwinfo wlan0 scan|awk -vRS=\"\" -vOFS=',' '$1=$1'"
+		comando = "iwinfo " .. wlandevice .. " scan|awk -vRS=\"\" -vOFS=',' '$1=$1'"
 		arr = run_array(comando)
 		for o,line in pairs(arr) do
 			string.gsub(line,"Cell,%d+,.-,Address:,(.-),ESSID:,\"(.-)\",Mode:,(.-),Channel:,(.-),Signal:,(.-),dBm,Quality:,(%d+)/(%d+),Encryption:,(.+)",
@@ -132,13 +133,14 @@ for k,v in pairs(data) do
 	end
 end
 
-print("*/")
-print("var	datasets=[")
+local strfile = "var	datasets=[\n";
 for k,v in pairs(new_data) do
-	print("{");
-	print("label: \""..v.address.." "..v.essid.."(Ch."..v.channel..")\",");
-	print("data: ["..implode(",",v.quality).."]");
-	print("},");
+	strfile = strfile .. "{\n"
+	strfile = strfile .. "label: \""..v.address.." "..v.essid.."(Ch."..v.channel..")\",\n"
+	strfile = strfile .. "data: ["..implode(",",v.quality).."]"
+	strfile = strfile .. "},\n"
 end
-print("]")
+strfile = strfile .. "]\n"
 
+-- Save file
+assert(io.open(file, 'w')):write(strfile)
