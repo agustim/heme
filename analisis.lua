@@ -86,6 +86,8 @@ positions = { "0", "22.5", "45", "67.5", "90", "112.5", "135", "157.5","180", "2
 num_test_by_position = 5
 wlandevice = "wlan0"
 
+print ("Content-type: application/html")
+print ("")
 for i, position in ipairs(positions) do
 	print ("Analitzar " .. position .. " Graus.")
 	print ("Wait few seconds.")
