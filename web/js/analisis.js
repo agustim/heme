@@ -55,7 +55,7 @@ function main() {
             search_aux = this.value
             radarChart("");
         }
-    }    
+    }
     radarChart("");
 }
     

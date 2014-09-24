@@ -86,8 +86,9 @@ positions = { "0", "22.5", "45", "67.5", "90", "112.5", "135", "157.5","180", "2
 num_test_by_position = 5
 wlandevice = "wlan0"
 
-print ("Content-type: application/html")
+print ("Content-type: text/html")
 print ("")
+print("<html><body><pre>")
 for i, position in ipairs(positions) do
 	print ("Analitzar " .. position .. " Graus.")
 	print ("Wait few seconds.")
@@ -146,3 +147,7 @@ strfile = strfile .. "]\n"
 
 -- Save file
 assert(io.open(file, 'w')):write(strfile)
+
+print("</pre>")
+print("<a href='/heme/index.html'>view analysis</a>"); 
+print("</body></html>") 
