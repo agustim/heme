@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "Content-type: application/html"
+echo 'Content-Disposition: attachment; filename="analysis.html"'
+echo ""
+
+html=$(cat /www/heme/index.html)
+echo "$html" | sed 's/<a href.*a>//g'| sed 's/<script.*script>//g'
+echo '<script>'
+cat /www/heme/js/Chart.min.js
+cat /www/heme/dades.js
+cat /www/heme/js/analisis.js
+echo '</script>'
